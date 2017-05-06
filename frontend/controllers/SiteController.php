@@ -82,13 +82,17 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) {
+                Yii::$app->getSession()->setFlash('success', 'Вы успешно авторизировались');
+                return $this->goBack();
+            } else {
+                Yii::$app->getSession()->setFlash('warning', 'Неверный пароль');
+            }
         }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
