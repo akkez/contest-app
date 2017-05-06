@@ -22,6 +22,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class Proposal extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 1;
+    const STATUS_REVIEWED = 2;
+
     /**
      * @inheritdoc
      */
@@ -47,8 +50,9 @@ class Proposal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phone', 'email', 'status', 'created_at'], 'required'],
-            [['grade1', 'grade2', 'grade3', 'status', 'created_at'], 'integer'],
+            [['phone', 'email', 'status'], 'required'],
+            [['name'], 'default', 'value' => ''],
+            [['grade1', 'grade2', 'grade3', 'status'], 'integer'],
             [['name', 'phone', 'email', 'photo1', 'photo2'], 'string', 'max' => 255],
         ];
     }
