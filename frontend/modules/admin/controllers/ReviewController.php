@@ -2,7 +2,7 @@
 
 namespace frontend\modules\admin\controllers;
 
-use app\models\Proposal;
+use frontend\models\Proposal;
 use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

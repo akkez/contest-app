@@ -4,7 +4,7 @@
  * Date: 06/05/17
  */
 
-namespace app\models;
+namespace frontend\models;
 
 use yii\base\Model;
 use yii\web\UploadedFile;

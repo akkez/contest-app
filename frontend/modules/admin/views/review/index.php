@@ -1,5 +1,5 @@
 <?php
-use app\models\Proposal;
+use frontend\models\Proposal;
 use yii\helpers\Html;
 
 $this->title = 'Админка';

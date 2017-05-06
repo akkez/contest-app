@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-use app\models\Proposal;
-use app\models\ProposalForm;
+use frontend\models\Proposal;
+use frontend\models\ProposalForm;
 use Yii;
 use yii\web\UploadedFile;
 
