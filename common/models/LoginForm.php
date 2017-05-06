@@ -31,7 +31,7 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => 'Почта',
+            'email' => 'Email',
             'password' => 'Пароль',
             'rememberMe' => 'Запомнить меня',
         ];

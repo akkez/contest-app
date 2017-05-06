@@ -51,6 +51,7 @@ class Proposal extends \yii\db\ActiveRecord
     {
         return [
             [['phone', 'email', 'status'], 'required'],
+            [['email'], 'email'],
             [['name'], 'default', 'value' => ''],
             [['grade1', 'grade2', 'grade3', 'status'], 'integer'],
             [['name', 'phone', 'email', 'photo1', 'photo2'], 'string', 'max' => 255],
@@ -69,11 +70,24 @@ class Proposal extends \yii\db\ActiveRecord
             'email' => 'Email',
             'photo1' => 'Первая работа',
             'photo2' => 'Вторая работа',
-            'grade1' => 'Оценка 1',
-            'grade2' => 'Оценка 2',
-            'grade3' => 'Оценка 3',
+            'grade1' => 'Первая оценка',
+            'grade2' => 'Вторая оценка',
+            'grade3' => 'Третья оценка',
             'status' => 'Status',
             'created_at' => 'Created At',
         ];
+    }
+
+    public function sendEmail()
+    {
+        return Yii::$app->mailer->compose()
+            ->setTo($this->email)
+            ->setFrom([Yii::$app->params['adminEmail'] => 'Contest Admin'])
+            ->setSubject('Ваша работа проверена')
+            ->setTextBody("Привет. Ваша работа была проверена и получила следующие оценки: \n" .
+                '1) ' . $this->grade1 . "\n" .
+                '2) ' . $this->grade2 . "\n" .
+                '3) ' . $this->grade3 . "\n")
+            ->send();
     }
 }

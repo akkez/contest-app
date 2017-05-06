@@ -40,8 +40,15 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<module:admin>' => '<module>/review/index',
+                '<module:admin>/<controller:review>/<id:\d+>' => '<module>/<controller>/view',
                 '<action:\w+>' => 'site/<action>',
             ],
+        ],
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'frontend\modules\admin\module',
         ],
     ],
     'params' => $params,
