@@ -43,6 +43,16 @@ return [
                 '<module:admin>' => '<module>/review/index',
                 '<module:admin>/<controller:review>/<id:\d+>' => '<module>/<controller>/view',
                 '<action:\w+>' => 'site/<action>',
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api'],
+            ],
+        ],
+        'response' => [
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG,
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
             ],
         ],
     ],
