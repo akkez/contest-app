@@ -3,6 +3,7 @@
 namespace frontend\modules\admin\controllers;
 
 use frontend\models\Proposal;
+use frontend\modules\admin\models\ProposalReviewForm;
 use kartik\mpdf\Pdf;
 use Yii;
 use yii\helpers\Html;
@@ -31,28 +32,14 @@ class ReviewController extends Controller
 
     public function actionView($id)
     {
-        /* @var Proposal $proposal */
-        $proposal = Proposal::findOne(['id' => $id]);
-        if (!$proposal) {
-            throw new NotFoundHttpException();
-        }
+        $proposalForm = new ProposalReviewForm($this->findModel($id));
 
-        if (\Yii::$app->request->isPost) {
-            $proposal->load(\Yii::$app->request->post());
-            $oldStatus = $proposal->status;
-            $proposal->status = Proposal::STATUS_REVIEWED;
-
-            if ($proposal->validate() && $proposal->save()) {
-                \Yii::$app->session->setFlash('success', 'Изменения сохранены. ' . Html::a('Вернуться к списку работ', ['/admin/review/index']));
-
-                if ($oldStatus != $proposal->status) {
-                    $proposal->sendEmail();
-                }
-            }
+        if ($proposalForm->load(\Yii::$app->request->post()) && $proposalForm->validate() && $proposalForm->update()) {
+            \Yii::$app->session->setFlash('success', 'Изменения сохранены. ' . Html::a('Вернуться к списку работ', ['/admin/review/index']));
         }
 
         return $this->render('view', [
-            'model' => $proposal
+            'model' => $proposalForm
         ]);
     }
 
@@ -100,4 +87,14 @@ class ReviewController extends Controller
         $pdf->getApi()->showImageErrors = true;
         return $pdf->render();
     }
+
+    private function findModel($id)
+    {
+        $model = Proposal::findOne(['id' => $id]);
+        if (!$model) {
+            throw new NotFoundHttpException();
+        }
+        return $model;
+    }
+
 }
